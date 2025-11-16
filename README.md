@@ -471,7 +471,8 @@ Ce projet est sous license **MIT** - voir le fichier [LICENSE](LICENSE) pour plu
 
 ## 📞 Support
 
-- 📧 Email : [Votre email]
+- 📧 Email : pierre2db@gmail.com
+- 📱 Téléphone : 0499/45 54 45
 - 🐛 Issues : [GitHub Issues](https://github.com/pierrre2db/job-search-agent/issues)
 - 💬 Discussions : [GitHub Discussions](https://github.com/pierrre2db/job-search-agent/discussions)
 
