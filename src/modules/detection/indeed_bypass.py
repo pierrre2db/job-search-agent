@@ -53,22 +53,40 @@ class IndeedBypassScraper:
     """
     Scraper Indeed avec bypass Cloudflare
     Utilise undetected-chromedriver pour simuler un navigateur réel
+
+    Supporte plusieurs pays: France, Belgique, Luxembourg, Suisse, Canada
     """
 
-    BASE_URL = "https://fr.indeed.com"
-    SEARCH_URL = f"{BASE_URL}/jobs"
+    # Domaines Indeed par pays
+    DOMAINS = {
+        'fr': 'https://fr.indeed.com',      # France
+        'be': 'https://be.indeed.com',      # Belgique
+        'lu': 'https://lu.indeed.com',      # Luxembourg
+        'ch': 'https://ch.indeed.com',      # Suisse
+        'ca': 'https://ca.indeed.com',      # Canada
+        'uk': 'https://uk.indeed.com',      # Royaume-Uni
+    }
 
-    def __init__(self, headless: bool = True, verbose: bool = False):
+    def __init__(self, headless: bool = True, verbose: bool = False, country: str = 'fr'):
         """
         Initialise le scraper avec bypass Cloudflare
 
         Args:
             headless: Exécuter Chrome en mode invisible (True recommandé)
             verbose: Activer les logs détaillés
+            country: Code pays (fr, be, lu, ch, ca, uk)
         """
         self.headless = headless
         self.verbose = verbose
+        self.country = country.lower()
+
+        # Définir l'URL de base selon le pays
+        self.BASE_URL = self.DOMAINS.get(self.country, self.DOMAINS['fr'])
+        self.SEARCH_URL = f"{self.BASE_URL}/jobs"
+
         self.driver = None
+
+        logger.info(f"Scraper configuré pour: {self.BASE_URL}")
 
     def _init_driver(self):
         """Initialise le driver Chrome non détectable"""
@@ -384,20 +402,30 @@ if __name__ == "__main__":
     print("⚠️  AVERTISSEMENT :")
     print("   - Le scraping d'Indeed peut violer leurs Terms of Service")
     print("   - Utilisez à vos propres risques")
-    print("   - Pour un usage légal, utilisez l'API Pole Emploi")
+    print("   - Pour un usage légal, privilégiez les APIs officielles")
     print()
     print("=" * 80)
     print()
 
-    # Utiliser le context manager
-    with IndeedBypassScraper(headless=True, verbose=True) as scraper:
+    # Exemple France
+    print("🇫🇷 Test France (Paris):")
+    with IndeedBypassScraper(headless=True, verbose=True, country='fr') as scraper:
         offers = scraper.scrape(
             query="Python Developer",
             location="Paris",
-            max_pages=2
+            max_pages=1
         )
+        print(f"✅ {len(offers)} offres trouvées\n")
 
-        print(f"\n✅ {len(offers)} offres trouvées\n")
+    # Exemple Belgique
+    print("\n🇧🇪 Test Belgique (Bruxelles):")
+    with IndeedBypassScraper(headless=True, verbose=True, country='be') as scraper:
+        offers = scraper.scrape(
+            query="Python Developer",
+            location="Bruxelles",
+            max_pages=1
+        )
+        print(f"✅ {len(offers)} offres trouvées\n")
 
         for i, offer in enumerate(offers[:5], 1):
             print(f"{i}. {offer.title}")
