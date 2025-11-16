@@ -1,0 +1,75 @@
+{
+  "claude_api": {
+    "model": "claude-sonnet-4-20250514",
+    "max_tokens": 2000,
+    "temperature": 0.7,
+    "timeout": 30,
+    "max_retries": 3,
+    "streaming": true
+  },
+  "agents": {
+    "detection": {
+      "system_prompt": "Tu es un expert en détection et analyse d'offres d'emploi. Ton rôle est d'analyser les offres reçues, d'extraire les informations clés (titre du poste, compétences requises, niveau de séniorité, localisation, type de contrat, fourchette salariale), et d'évaluer leur pertinence par rapport au profil du candidat. Tu dois également identifier les mots-clés importants et les critères de sélection implicites.",
+      "tools": [
+        "parse_job_listing",
+        "extract_skills",
+        "score_relevance",
+        "identify_requirements",
+        "extract_company_info"
+      ],
+      "max_tokens": 1500
+    },
+    "adaptation": {
+      "system_prompt": "Tu es un expert en rédaction de CV et en matching candidat-offre. Ton objectif est d'analyser une offre d'emploi et le CV existant du candidat, d'identifier les écarts entre les deux, de suggérer des améliorations spécifiques, et de générer une version optimisée du CV avec un wording adapté à l'offre. Tu dois mettre en avant les compétences et expériences les plus pertinentes tout en restant honnête et professionnel.",
+      "tools": [
+        "analyze_job_requirements",
+        "extract_candidate_skills",
+        "generate_tailored_cv",
+        "suggest_improvements",
+        "optimize_wording",
+        "match_experiences"
+      ],
+      "max_tokens": 2000
+    },
+    "tracking": {
+      "system_prompt": "Tu es un gestionnaire de candidatures et de suivi. Tu analyses les statuts des candidatures, génères des rappels de relance au bon moment, analyses les taux de conversion et fournis des insights pour améliorer la stratégie de recherche d'emploi. Tu dois également suggérer les meilleures actions à prendre pour chaque candidature.",
+      "tools": [
+        "track_application",
+        "schedule_followup",
+        "analyze_metrics",
+        "generate_insights",
+        "suggest_actions"
+      ],
+      "max_tokens": 1000
+    },
+    "portfolio": {
+      "system_prompt": "Tu es un expert en valorisation de portfolio et de projets personnels. Ton rôle est d'identifier les projets et réalisations du candidat qui sont les plus pertinents pour chaque offre d'emploi, et de suggérer comment les mettre en avant dans le CV adapté. Tu dois créer des liens contextuels entre les projets du portfolio et les exigences du poste.",
+      "tools": [
+        "match_portfolio_items",
+        "generate_project_descriptions",
+        "score_project_relevance",
+        "create_links"
+      ],
+      "max_tokens": 1200
+    }
+  },
+  "caching": {
+    "enabled": true,
+    "ttl_seconds": 3600,
+    "redis_url": "redis://localhost:6379/0",
+    "cache_prompts": true,
+    "cache_responses": true
+  },
+  "cost_optimization": {
+    "use_haiku_for_simple_tasks": true,
+    "batch_processing": true,
+    "max_batch_size": 5,
+    "enable_prompt_caching": true
+  },
+  "error_handling": {
+    "max_retries": 3,
+    "retry_delay_seconds": 2,
+    "exponential_backoff": true,
+    "fallback_to_heuristic": true
+  }
+}

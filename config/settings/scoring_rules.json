@@ -1,0 +1,269 @@
+{
+  "scoring_system": {
+    "version": "1.0",
+    "total_score_range": {
+      "min": 0.0,
+      "max": 1.0
+    },
+    "decision_thresholds": {
+      "auto_reject": 0.30,
+      "review_required": 0.60,
+      "auto_apply": 0.85,
+      "priority": 0.75
+    }
+  },
+  "scoring_components": {
+    "skills_match": {
+      "weight": 0.40,
+      "description": "Matching entre compétences requises et compétences du candidat",
+      "calculation": "weighted_skill_match",
+      "subcriteria": {
+        "required_skills": {
+          "weight": 0.70,
+          "scoring": {
+            "all_matched": 1.0,
+            "75_percent_matched": 0.80,
+            "50_percent_matched": 0.50,
+            "25_percent_matched": 0.25,
+            "none_matched": 0.0
+          }
+        },
+        "preferred_skills": {
+          "weight": 0.20,
+          "scoring": {
+            "all_matched": 1.0,
+            "some_matched": 0.60,
+            "none_matched": 0.0
+          }
+        },
+        "expertise_level": {
+          "weight": 0.10,
+          "scoring": {
+            "expert_in_key_skills": 1.0,
+            "proficient_in_key_skills": 0.80,
+            "learning_key_skills": 0.40
+          }
+        }
+      }
+    },
+    "location_match": {
+      "weight": 0.20,
+      "description": "Compatibilité géographique",
+      "subcriteria": {
+        "geographic_location": {
+          "scoring": {
+            "preferred_city": 1.0,
+            "acceptable_city": 0.80,
+            "same_region": 0.60,
+            "requires_relocation": 0.30,
+            "international": 0.10
+          }
+        },
+        "remote_policy": {
+          "scoring": {
+            "fully_remote": 1.0,
+            "hybrid_3_days": 0.90,
+            "hybrid_2_days": 0.80,
+            "hybrid_1_day": 0.60,
+            "full_office": 0.30
+          }
+        }
+      }
+    },
+    "salary_match": {
+      "weight": 0.15,
+      "description": "Compatibilité salariale",
+      "subcriteria": {
+        "base_salary": {
+          "scoring": {
+            "above_target": 1.0,
+            "at_target": 0.90,
+            "above_minimum": 0.70,
+            "at_minimum": 0.50,
+            "below_minimum": 0.20,
+            "significantly_below": 0.0
+          }
+        },
+        "transparency": {
+          "salary_mentioned": 0.10,
+          "salary_not_mentioned": -0.05
+        }
+      }
+    },
+    "seniority_match": {
+      "weight": 0.10,
+      "description": "Correspondance du niveau d'expérience",
+      "scoring": {
+        "exact_match": 1.0,
+        "one_level_up": 0.80,
+        "one_level_down": 0.70,
+        "two_levels_gap": 0.30
+      },
+      "seniority_levels": {
+        "intern": 0,
+        "junior": 1,
+        "mid": 2,
+        "senior": 3,
+        "lead": 4,
+        "principal": 5
+      }
+    },
+    "company_culture": {
+      "weight": 0.10,
+      "description": "Alignement avec les valeurs et la culture souhaitée",
+      "indicators": {
+        "values_alignment": {
+          "weight": 0.40,
+          "keywords": {
+            "innovation": 0.2,
+            "work_life_balance": 0.3,
+            "diversity": 0.2,
+            "learning": 0.3
+          }
+        },
+        "company_size": {
+          "weight": 0.30,
+          "scoring": {
+            "preferred_size": 1.0,
+            "acceptable_size": 0.70,
+            "not_preferred": 0.40
+          }
+        },
+        "industry": {
+          "weight": 0.30,
+          "scoring": {
+            "preferred_industry": 1.0,
+            "neutral_industry": 0.60,
+            "excluded_industry": 0.0
+          }
+        }
+      }
+    },
+    "benefits": {
+      "weight": 0.05,
+      "description": "Avantages et bénéfices proposés",
+      "must_have": {
+        "weight": 0.60,
+        "scoring": {
+          "all_present": 1.0,
+          "most_present": 0.70,
+          "some_present": 0.40,
+          "none_present": 0.0
+        }
+      },
+      "nice_to_have": {
+        "weight": 0.40,
+        "scoring": {
+          "many_present": 1.0,
+          "some_present": 0.60,
+          "few_present": 0.30,
+          "none_present": 0.0
+        }
+      }
+    }
+  },
+  "bonus_malus": {
+    "bonus_factors": {
+      "referral_from_connection": {
+        "boost": 0.10,
+        "description": "Quelqu'un dans le réseau travaille dans l'entreprise"
+      },
+      "recent_funding": {
+        "boost": 0.05,
+        "description": "L'entreprise a récemment levé des fonds"
+      },
+      "fast_growing": {
+        "boost": 0.05,
+        "description": "Entreprise en forte croissance"
+      },
+      "tech_stack_match": {
+        "boost": 0.08,
+        "description": "Stack technique très alignée avec expertise"
+      },
+      "portfolio_relevant": {
+        "boost": 0.07,
+        "description": "Portfolio particulièrement pertinent pour ce poste"
+      }
+    },
+    "malus_factors": {
+      "long_hiring_process": {
+        "penalty": -0.05,
+        "description": "Process de recrutement connu pour être très long"
+      },
+      "poor_glassdoor_rating": {
+        "penalty": -0.10,
+        "description": "Note Glassdoor < 3.0/5"
+      },
+      "frequent_turnover": {
+        "penalty": -0.08,
+        "description": "Turnover élevé signalé"
+      },
+      "outdated_job_posting": {
+        "penalty": -0.15,
+        "description": "Offre publiée il y a > 60 jours"
+      },
+      "vague_description": {
+        "penalty": -0.05,
+        "description": "Description de poste très vague ou générique"
+      }
+    }
+  },
+  "special_rules": {
+    "deal_breakers": {
+      "enabled": true,
+      "rules": [
+        {
+          "name": "excluded_industry",
+          "action": "auto_reject",
+          "description": "Industrie dans la liste d'exclusion"
+        },
+        {
+          "name": "salary_too_low",
+          "threshold": "50% below minimum",
+          "action": "auto_reject"
+        },
+        {
+          "name": "requires_relocation_international",
+          "condition": "accept_relocation = false",
+          "action": "auto_reject"
+        }
+      ]
+    },
+    "auto_boost": {
+      "enabled": true,
+      "rules": [
+        {
+          "name": "dream_company",
+          "companies": ["Google", "Meta", "OpenAI", "Anthropic"],
+          "boost": 0.15
+        },
+        {
+          "name": "perfect_role_match",
+          "condition": "skills_match > 0.95 AND seniority exact match",
+          "boost": 0.10
+        }
+      ]
+    }
+  },
+  "semantic_analysis": {
+    "enabled": true,
+    "use_claude": true,
+    "fallback_to_keyword": true,
+    "keyword_weights": {
+      "required_skills": 1.0,
+      "job_title": 0.8,
+      "responsibilities": 0.6,
+      "qualifications": 0.7,
+      "benefits": 0.3
+    }
+  },
+  "recalibration": {
+    "enabled": true,
+    "frequency": "weekly",
+    "adjust_weights_based_on": [
+      "application_success_rate",
+      "response_rate",
+      "interview_conversion"
+    ]
+  }
+}

@@ -1,0 +1,164 @@
+{
+  "candidate_profile": {
+    "name": "Votre Nom",
+    "email": "votre.email@example.com",
+    "phone": "+33 6 XX XX XX XX",
+    "location": "Paris, France",
+    "portfolio_url": "https://votreportfolio.com",
+    "linkedin_url": "https://linkedin.com/in/votre-profil",
+    "github_url": "https://github.com/votre-username"
+  },
+  "job_search_criteria": {
+    "target_roles": [
+      "Software Engineer",
+      "Full Stack Developer",
+      "Backend Developer",
+      "Python Developer",
+      "AI/ML Engineer"
+    ],
+    "seniority_levels": [
+      "mid",
+      "senior"
+    ],
+    "contract_types": [
+      "CDI",
+      "full_time",
+      "permanent"
+    ],
+    "locations": {
+      "preferred": [
+        "Paris",
+        "Remote",
+        "Île-de-France"
+      ],
+      "acceptable": [
+        "Lyon",
+        "Bordeaux",
+        "Nantes",
+        "Toulouse"
+      ],
+      "remote_only": false,
+      "accept_relocation": false
+    },
+    "salary": {
+      "minimum_annual": 45000,
+      "target_annual": 60000,
+      "currency": "EUR",
+      "negotiable": true
+    },
+    "industries": {
+      "preferred": [
+        "Tech/Startup",
+        "SaaS",
+        "Fintech",
+        "E-commerce",
+        "AI/ML"
+      ],
+      "excluded": [
+        "Gambling",
+        "Tobacco"
+      ]
+    },
+    "company_size": {
+      "preferred": [
+        "startup",
+        "scale-up",
+        "medium"
+      ],
+      "acceptable": [
+        "large-enterprise"
+      ]
+    }
+  },
+  "skills": {
+    "technical": {
+      "expert": [
+        "Python",
+        "FastAPI",
+        "REST APIs",
+        "PostgreSQL",
+        "Git"
+      ],
+      "proficient": [
+        "Docker",
+        "AWS",
+        "Redis",
+        "JavaScript",
+        "React"
+      ],
+      "learning": [
+        "Kubernetes",
+        "Machine Learning",
+        "GraphQL"
+      ]
+    },
+    "soft_skills": [
+      "Communication",
+      "Team collaboration",
+      "Problem solving",
+      "Agile methodologies",
+      "Code review"
+    ],
+    "languages": {
+      "french": "native",
+      "english": "fluent",
+      "spanish": "intermediate"
+    }
+  },
+  "work_preferences": {
+    "remote": {
+      "preference": "hybrid",
+      "min_remote_days": 2,
+      "fully_remote_acceptable": true
+    },
+    "work_hours": {
+      "flexible_hours": true,
+      "part_time_acceptable": false
+    },
+    "benefits": {
+      "must_have": [
+        "Health insurance",
+        "Paid time off"
+      ],
+      "nice_to_have": [
+        "Stock options",
+        "Learning budget",
+        "Gym membership",
+        "Meal vouchers",
+        "Transport reimbursement"
+      ]
+    },
+    "culture": {
+      "values": [
+        "Innovation",
+        "Work-life balance",
+        "Diversity & inclusion",
+        "Continuous learning"
+      ],
+      "avoid": [
+        "Overtime culture",
+        "Micromanagement"
+      ]
+    }
+  },
+  "scoring_weights": {
+    "skills_match": 0.40,
+    "location_match": 0.20,
+    "salary_match": 0.15,
+    "seniority_match": 0.10,
+    "company_culture": 0.10,
+    "benefits": 0.05
+  },
+  "notifications": {
+    "email_on_new_match": true,
+    "email_on_high_score": true,
+    "high_score_threshold": 0.80,
+    "daily_digest": true,
+    "digest_time": "09:00"
+  },
+  "auto_apply": {
+    "enabled": false,
+    "min_score_threshold": 0.85,
+    "require_manual_review": true
+  }
+}

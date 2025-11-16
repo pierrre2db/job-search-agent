@@ -1,0 +1,294 @@
+{
+  "google_drive": {
+    "enabled": true,
+    "credentials_path": "./config/credentials/google_credentials.json",
+    "root_folder_name": "Job Search Agent",
+    "folder_structure": {
+      "applications": "Applications",
+      "cvs": "CVs Adaptés",
+      "offers": "Offres Sauvegardées",
+      "templates": "Templates",
+      "archives": "Archives"
+    },
+    "naming_conventions": {
+      "cv_format": "CV_{candidate_name}_{job_title}_{company}_{date}.docx",
+      "offer_format": "Offer_{company}_{job_title}_{date}.json",
+      "date_format": "%Y%m%d_%H%M%S"
+    },
+    "sharing": {
+      "auto_generate_links": true,
+      "link_type": "anyone_with_link",
+      "default_permissions": "reader"
+    },
+    "versioning": {
+      "enabled": true,
+      "max_versions_per_cv": 5,
+      "auto_cleanup_old_versions": true
+    }
+  },
+  "google_sheets": {
+    "enabled": true,
+    "spreadsheet_id": "",
+    "sheet_names": {
+      "dashboard": "Dashboard",
+      "applications": "Applications",
+      "analytics": "Analytics",
+      "followups": "Relances"
+    },
+    "dashboard_columns": [
+      "Date Détection",
+      "Titre Poste",
+      "Entreprise",
+      "Score",
+      "Source",
+      "Localisation",
+      "Type Contrat",
+      "Salaire",
+      "URL Offre",
+      "Status",
+      "CV Généré",
+      "Date Candidature",
+      "Dernière Relance",
+      "Notes"
+    ],
+    "auto_update_frequency": "hourly",
+    "conditional_formatting": {
+      "enabled": true,
+      "rules": {
+        "high_score": {
+          "condition": "score >= 0.8",
+          "background_color": "#d4edda",
+          "text_color": "#155724"
+        },
+        "medium_score": {
+          "condition": "score >= 0.6",
+          "background_color": "#fff3cd",
+          "text_color": "#856404"
+        },
+        "low_score": {
+          "condition": "score < 0.6",
+          "background_color": "#f8d7da",
+          "text_color": "#721c24"
+        }
+      }
+    }
+  },
+  "gmail": {
+    "enabled": true,
+    "email_detection": {
+      "enabled": true,
+      "labels_to_monitor": [
+        "Jobs",
+        "LinkedIn",
+        "Indeed",
+        "Recruitment"
+      ],
+      "sender_whitelist": [
+        "noreply@linkedin.com",
+        "noreply@indeed.com",
+        "jobs@*.com"
+      ],
+      "check_frequency": "every_15_minutes",
+      "parse_attachments": true
+    },
+    "notifications": {
+      "enabled": true,
+      "smtp_config": {
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "use_tls": true
+      },
+      "templates_path": "./config/templates/emails/",
+      "send_on_events": [
+        "new_high_score_offer",
+        "cv_generated",
+        "application_submitted",
+        "followup_reminder"
+      ]
+    }
+  },
+  "job_boards": {
+    "indeed": {
+      "enabled": true,
+      "method": "scraping",
+      "base_url": "https://www.indeed.fr",
+      "search_params": {
+        "default_location": "Paris",
+        "sort_by": "date",
+        "radius": 25
+      },
+      "rate_limiting": {
+        "requests_per_minute": 10,
+        "delay_between_requests": 3
+      },
+      "scraping_config": {
+        "user_agent_rotation": true,
+        "headless": true,
+        "timeout": 30
+      }
+    },
+    "linkedin": {
+      "enabled": false,
+      "method": "oauth",
+      "oauth_config": {
+        "client_id": "",
+        "client_secret": "",
+        "redirect_uri": "http://localhost:8000/auth/linkedin/callback",
+        "scopes": ["r_basicprofile", "r_emailaddress"]
+      },
+      "rate_limiting": {
+        "requests_per_hour": 100
+      }
+    },
+    "pole_emploi": {
+      "enabled": true,
+      "method": "api",
+      "api_endpoint": "https://api.pole-emploi.io/partenaire/offresdemploi/v2",
+      "auth_endpoint": "https://entreprise.pole-emploi.fr/connexion/oauth2/access_token",
+      "rate_limiting": {
+        "requests_per_minute": 20
+      }
+    },
+    "welcometothejungle": {
+      "enabled": false,
+      "method": "scraping",
+      "base_url": "https://www.welcometothejungle.com/fr",
+      "rate_limiting": {
+        "requests_per_minute": 5
+      }
+    },
+    "apec": {
+      "enabled": true,
+      "method": "scraping",
+      "base_url": "https://www.apec.fr",
+      "rate_limiting": {
+        "requests_per_minute": 8
+      }
+    }
+  },
+  "redis": {
+    "enabled": true,
+    "host": "localhost",
+    "port": 6379,
+    "db": 0,
+    "password": null,
+    "use_for": {
+      "caching": true,
+      "session_storage": true,
+      "rate_limiting": true,
+      "task_queue": true
+    },
+    "cache_ttl": {
+      "claude_responses": 3600,
+      "job_offers": 86400,
+      "api_tokens": 3000,
+      "scraping_results": 7200
+    }
+  },
+  "database": {
+    "type": "sqlite",
+    "connection_string": "sqlite:///./job_search.db",
+    "connection_pool": {
+      "max_connections": 10,
+      "timeout": 30
+    },
+    "tables": {
+      "applications": {
+        "auto_migrate": true,
+        "backup_frequency": "daily"
+      }
+    }
+  },
+  "webhooks": {
+    "enabled": false,
+    "endpoints": [
+      {
+        "name": "slack_notifications",
+        "url": "",
+        "events": ["new_high_score_offer", "application_submitted"],
+        "enabled": false
+      },
+      {
+        "name": "custom_webhook",
+        "url": "",
+        "events": ["*"],
+        "enabled": false
+      }
+    ]
+  },
+  "monitoring": {
+    "logging": {
+      "level": "INFO",
+      "format": "json",
+      "output": ["console", "file"],
+      "file_path": "./logs/job_search_agent.log",
+      "rotation": {
+        "max_size_mb": 10,
+        "backup_count": 5
+      }
+    },
+    "metrics": {
+      "enabled": true,
+      "export_to": "prometheus",
+      "prometheus_port": 9090
+    },
+    "health_checks": {
+      "enabled": true,
+      "endpoints": {
+        "liveness": "/health",
+        "readiness": "/ready"
+      },
+      "check_frequency": 30
+    }
+  },
+  "scheduler": {
+    "enabled": true,
+    "timezone": "Europe/Paris",
+    "jobs": [
+      {
+        "name": "scrape_job_boards",
+        "schedule": "0 */2 * * *",
+        "description": "Scrape job boards every 2 hours",
+        "enabled": true
+      },
+      {
+        "name": "check_gmail",
+        "schedule": "*/15 * * * *",
+        "description": "Check Gmail every 15 minutes",
+        "enabled": true
+      },
+      {
+        "name": "update_google_sheets",
+        "schedule": "0 * * * *",
+        "description": "Update Google Sheets dashboard hourly",
+        "enabled": true
+      },
+      {
+        "name": "send_followup_reminders",
+        "schedule": "0 9 * * *",
+        "description": "Send follow-up reminders daily at 9 AM",
+        "enabled": true
+      },
+      {
+        "name": "daily_digest",
+        "schedule": "0 9 * * *",
+        "description": "Send daily digest of new opportunities",
+        "enabled": true
+      },
+      {
+        "name": "cleanup_old_data",
+        "schedule": "0 2 * * 0",
+        "description": "Cleanup old data weekly on Sunday at 2 AM",
+        "enabled": true
+      }
+    ]
+  },
+  "feature_flags": {
+    "auto_cv_generation": true,
+    "auto_application": false,
+    "portfolio_linking": true,
+    "ab_testing": false,
+    "semantic_search": true,
+    "ai_powered_followup": true
+  }
+}
