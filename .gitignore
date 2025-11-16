@@ -301,6 +301,11 @@ cache/
 data/scraped/
 data/raw/
 
+# Debug artifacts from scraping tests
+*_response.html
+*_screenshot.png
+test_*.html
+
 # Keep structure folders
 !data/.gitkeep
 !outputs/.gitkeep
